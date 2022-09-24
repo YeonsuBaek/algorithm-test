@@ -24,9 +24,10 @@ int main() {
                 str[i] -= 13;
             }
         }
-        
-        cout << str[i];
+       
     }
+    
+    cout << str;
     
     return 0;
 }
