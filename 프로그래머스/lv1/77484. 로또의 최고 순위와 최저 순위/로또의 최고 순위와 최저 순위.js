@@ -2,9 +2,15 @@ function solution(lottos, win_nums) {
   const validations = lottos.filter((number) => {
     if (number !== 0) return number;
   });
-  let same = 0;
+  const unknownNumber = lottos.length - validations.length;
   let result = new Array(2).fill(6);
 
+  if (unknownNumber === 6) {
+    result[0] -= unknownNumber - 1;
+    return result;
+  }
+
+  let same = 0;
   for (let i = 0; i < validations.length; i++) {
     if (win_nums.includes(validations[i])) {
       same += 1;
@@ -14,10 +20,8 @@ function solution(lottos, win_nums) {
       }
     }
   }
-  const unknownNumber = lottos.length - validations.length;
 
-  if (unknownNumber === 6) result[0] -= unknownNumber - 1;
-  else if (unknownNumber >= 1 || (unknownNumber === 1 && same === 1)) result[0] -= unknownNumber;
+  if (unknownNumber + same >= 2) result[0] -= unknownNumber;
 
   return result;
 }
