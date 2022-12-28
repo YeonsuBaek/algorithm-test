@@ -14,19 +14,19 @@ function solution(babbling) {
           words.slice(i, i + 3) !== current
         ) {
           current = words.slice(i, i + 3);
-          array += current;
           i += 3;
-        } else break;
+        } else break
       } else if (words[i] === 'y' || words[i] === 'm') {
         if (
           speakingList.includes(words.slice(i, i + 2)) &&
           words.slice(i, i + 2) !== current
         ) {
           current = words.slice(i, i + 2);
-          array += current;
           i += 2;
-        } else break;
+        } else break
       } else break;
+
+      array += current;
     }
 
     if (array === words) answer++;
