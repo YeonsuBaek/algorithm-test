@@ -7,22 +7,16 @@ function solution(s) {
         for (let i = 0; i < s.length; i++) {
             if (brackets[i] === '(' || brackets[i] === '{' || brackets[i] === '[') {
                 stack.push(brackets[i]);
-                continue;
-            }
-            
-            const pair = [stack[stack.length - 1], brackets[i]].join('')
-            if (pair === '()' || pair === '{}' || pair === '[]') {
-                stack.pop();
-            } else if (stack.length === 0) {
-                result -= 1;
-                break;
             } else {
+                const pair = [stack[stack.length - 1], brackets[i]].join('')
+                if (pair === '()' || pair === '{}' || pair === '[]') {
+                    stack.pop();
+                    continue;
+                } else if (stack.length === 0) result -= 1;
                 break;
             }
         }
-        if (stack.length === 0) {
-            result += 1;
-        }
+        if (stack.length === 0) result += 1;
         
         brackets.push(brackets[0]);
         brackets.splice(0, 1);
