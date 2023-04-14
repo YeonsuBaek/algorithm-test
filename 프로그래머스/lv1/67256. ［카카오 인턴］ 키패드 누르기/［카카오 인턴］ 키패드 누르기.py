@@ -1,43 +1,29 @@
-import math
+def get_distance(pos, std):
+    return abs(pos[0] - std[0]) + abs(pos[1] - std[1])
+
 def solution(numbers, hand):
     left_number = [1, 4, 7]
     right_number = [3, 6, 9]
-    left_hand = '*'
-    right_hand = '#'
+    directions = {'L': [0, 3], 'R': [2, 3]}
     result = []
     
+    def press_key(direction, pos):
+        result.append(direction)
+        directions[direction] = pos
+    
     for number in numbers:
-        if number in left_number:
-            result.append('L')
-            left_hand = number
-        elif number in right_number:
-            result.append('R')
-            right_hand = number
+        direction = 'L'
+        number_pos = [0, (number - 1) // 3]
+        if number in left_number: pass
+        elif number in right_number: direction = 'R'
         else:
-            if left_hand == '*': left_x, left_y = 4, 1
-            elif left_hand == 0: left_x, left_y = 4, 2
-            else: left_x, left_y = math.ceil(left_hand / 3), left_hand % 3 if left_hand % 3 != 0 else left_hand % 3 + 1
-            if right_hand == '#': right_x, right_y = 4, 3
-            elif right_hand == 0: right_x, right_y = 4, 2
-            else: right_x, right_y = math.ceil(right_hand / 3), right_hand % 3 if right_hand % 3 != 0 else right_hand % 3 + 1
-            if number == 0: std_x, std_y = 4, 2
-            else: std_x, std_y = math.ceil(number / 3), number % 3 if number % 3 != 0 else number % 3 + 1
-            
-            left_distance = abs(left_x - std_x) + abs(left_y - std_y)
-            right_distance = abs(right_x - std_x) + abs(right_y - std_y)
+            number_pos = [1, 3 if number == 0 else (number - 1) // 3]
+            left_distance = get_distance(directions['L'], number_pos)
+            right_distance = get_distance(directions['R'], number_pos)
 
-            if left_distance < right_distance:
-                result.append('L')
-                left_hand = number
-            elif left_distance > right_distance:
-                result.append('R')
-                right_hand = number
-            else:
-                if hand == 'left':
-                    result.append('L')
-                    left_hand = number
-                else:
-                    result.append('R')
-                    right_hand = number
+            if left_distance > right_distance: direction = 'R'
+            elif left_distance == right_distance and hand == 'right': direction = 'R'
+                    
+        press_key(direction, number_pos)
 
     return "".join(result)
