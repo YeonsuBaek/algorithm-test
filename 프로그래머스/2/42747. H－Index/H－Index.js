@@ -1,7 +1,13 @@
 function solution(citations) {
-    const n = citations.length
-    for (let h = Math.max(...citations); h >= 0; h--) {
-        const list = citations.filter(citation => citation >= h)
-        if (list.length >= h) return h
+    let num = citations.length
+    
+    while (num >= 0) {
+        const filter = citations.filter(citation => citation >= num)
+        if (filter.length >= num) {
+            break
+        }
+        num--
     }
+    
+    return num
 }
